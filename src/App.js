@@ -20,9 +20,16 @@ class App extends React.Component {
     isGoingUp: false,
     upArray: [],
     downArray: [],
+    outsideFloor: 1,
   }
 
   totalFloors = 9
+
+  updateOutsideFloor = (newFloor) => {
+    this.setState({
+      outsideFloor: newFloor
+    })
+  }
 
   render() {
     return (
@@ -31,7 +38,7 @@ class App extends React.Component {
       <InsideElevator currentFloor={this.state.currentFloor} isGoingUp={this.state.isGoingUp}/>
       <div>--------------------------------------</div>
       <h1>Outside the elevator</h1>
-      <OutsideElevator totalFloors={this.totalFloors}/>
+      <OutsideElevator totalFloors={this.totalFloors} updateOutsideFloor={this.updateOutsideFloor} outsideFloor={this.outsideFloor}/>
     </div>
     )
   }
