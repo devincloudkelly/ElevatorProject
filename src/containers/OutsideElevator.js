@@ -2,34 +2,30 @@ import React from 'react'
 import { Button } from 'semantic-ui-react'
 
 function OutsideElevator(props) {
-
-    let createFloorButtons = (totalFloors) => {  
-            for (let i = 0; i++; i<totalFloors){
+    
+    function createFloorButtons(nFloors) {  
+        let floors = []
+        for (let i = 1; i<=nFloors; i++){
             console.log(i, 'i from in the method')
-            return <Button>{i+1}</Button>
+            floors.push(i)
         }
+        return floors.map(floor => {return <Button>{floor}</Button>})
     }
-
-        let {totalFloors} = props
+            
+        let { totalFloors } = props
         console.log(totalFloors, 'total floors as a prop')
+        console.log(props)
+     
         return(
             <div>
                 <Button.Group>
-                {createFloorButtons(totalFloors)}
-                <Button>1</Button>
-                <Button>2</Button>
-                <Button>3</Button>
-                <Button>4</Button>
-                <Button>5</Button>
-                <Button>6</Button>
+                    {createFloorButtons(totalFloors)}
                 </Button.Group>
                     
-                <button>
-                    Up
-                </button>
-                <button>
-                    Down
-                </button>
+                <Button.Group>
+                    <Button>Up</Button>
+                    <Button>Down</Button>
+                </Button.Group>
             </div>
         )
     
