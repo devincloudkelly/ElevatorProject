@@ -18,19 +18,20 @@ class App extends React.Component {
     isInside: true,
     currentFloor: 1,
     isGoingUp: false,
+    upArray: [],
+    downArray: [],
   }
+
+  totalFloors = 9
 
   render() {
     return (
-    !this.state.isInside ?
-     
       <div>
-        <OutsideElevator />
-      </div>
-
-     :
-    <div>
+        <h1>Inside the Elevator</h1>      
       <InsideElevator currentFloor={this.state.currentFloor} isGoingUp={this.state.isGoingUp}/>
+      <div>--------------------------------------</div>
+      <h1>Outside the elevator</h1>
+      <OutsideElevator totalFloors={this.totalFloors}/>
     </div>
     )
   }
