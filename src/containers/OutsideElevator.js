@@ -9,7 +9,7 @@ function OutsideElevator(props) {
 
     function updateFloor(e) {
         console.log('hello, updating the floor', e.target.id)
-        // updateOutsideFloor(e.target)
+        updateOutsideFloor(e.target.id)
     }
 
     function createFloorButtons(nFloors) {  
@@ -19,7 +19,7 @@ function OutsideElevator(props) {
             floors.push(i)
         }
         return floors.map(floor => {
-            if(floor == props.outsideFloor){
+            if(floor === props.outsideFloor){
                 return <Button id={floor} color='blue' onClick={updateFloor}>{floor}</Button>
             } else {
                 return <Button id={floor} onClick={updateFloor}>{floor}</Button>
@@ -29,10 +29,11 @@ function OutsideElevator(props) {
             
         return(
             <div>
+                <p>Select a floor to simulate:</p>
                 <Button.Group>
                     {createFloorButtons(totalFloors)}
                 </Button.Group>
-                <br/>
+                <br/><br/>
                 <Button.Group>
                     <Button>Up</Button>
                     <Button>Down</Button>

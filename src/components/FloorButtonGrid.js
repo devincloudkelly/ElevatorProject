@@ -1,26 +1,38 @@
 import React from 'react'
+import { Button } from 'semantic-ui-react'
 
-let FloorButtonGrid =(props) => {
+let FloorButtonGrid = (props) => {
+    let { totalFloors, addFloorToQueue, currentFloor } = props
 
-    let createButtonGrid = (floors, width) => {
-        let buttonCounter = floors + 1
-        let height = Math.ceil(floors/width)
-        for (let i = height; i--; i>0) {
-            return (<tr>
-                while (buttonCounter > 0) {
-
-                    // Need to finish this part
-                     (<td>
-                        {buttonCounter - 1}
-                    </td>)
-                }
-            </tr>)
+    function requestFloor(e) {
+        let targetFloor = e.target.id
+        if (targetFloor > currentFloor){
+            return addFloorToQueue(targetFloor, "up")
         }
+        if (targetFloor < currentFloor) {
+            return addFloorToQueue(targetFloor, "down")
+        }
+        return null
+    }
+
+    function createButtonGrid(nFloors) {
+        let floors = []
+        for (let i = 1; i<=nFloors; i++){
+            console.log(i, 'i from in the method')
+            floors.push(i)
+        }
+        return floors.map(floor => {
+                return <Button id={floor} onClick={requestFloor}>{floor}</Button>
+        })
     }
 
     return (
         <div>
-            <table>
+            <Button.Group>
+                {createButtonGrid(totalFloors)}
+            </Button.Group>
+                
+            {/* <table>
                 <tr>
                     <td>
                         7
@@ -54,7 +66,7 @@ let FloorButtonGrid =(props) => {
                         3
                     </td>
                 </tr>
-            </table>
+            </table> */}
         </div>
     )
 }
