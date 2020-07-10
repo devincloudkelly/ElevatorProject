@@ -4,58 +4,66 @@ import OutsideElevator from './containers/OutsideElevator';
 import InsideElevator from './containers/InsideElevator';
 
 class App extends React.Component {
-
+  
   
   state = {
-    currentFloor: 1,
-    direction: 'not moving',
-    upArray: [],
-    downArray: [],
+    currentFloor: 5,
     outsideFloor: 1,
+    direction: 'none',
+    upQueue: {
+      1:0,
+      2:0,
+      3:0,
+      4:0,
+      5:0,
+      6:0,
+      7:0,
+      8:0,
+      9:0,
+    },
+    downQueue: {
+      1:0,
+      2:0,
+      3:0,
+      4:0,
+      5:0,
+      6:0,
+      7:0,
+      8:0,
+      9:0,
+    },
   }
-  
+
   totalFloors = 9
 
   updateOutsideFloor = (newFloor) => {
-    this.setState({
-      outsideFloor: parseInt(newFloor)
-    })
+    console.log('updating outside floor in state', newFloor)
+    this.setState({outsideFloor: newFloor})
   }
 
   startMoving = (direction) => {
     // use this when you are addingFloorToQueue to start elevator if it is stationery.
-    if (this.state.direction == "not moving"){
+    if (this.state.direction === "none"){
       this.setState({direction: direction})
     }
   }
 
+  // working
   addFloorToQueue = (floor, direction) => {
+    console.log('from App, adding floor, direction', floor, direction)
     console.log('adding floor to queue in App', floor, direction)
-    if (direction = 'up'){
+    if (direction === 'up'){
       this.setState(state => {
-        const upArray = state.upArray.map((element, index) => {
-          if (index = parseInt(floor)-1){
-            return true;
-          } else {
-            return element
-          }
-        })
-        // this isn't working because it is updating the direction, then changing it I think...
-        this.startMoving(direction)
-        return {upArray};
+        let upQueue = Object.assign({}, state.upQueue)
+        upQueue[floor] = 1
+        return {upQueue}
       })
     }
-    if (direction = 'down'){
+    if (direction === 'down'){
       this.setState(state => {
-        const downArray = state.downArray.map((element, index) => {
-          if (index = parseInt(floor)-1){
-            return true
-          } else {
-            return element
-          }
-        })
-        this.startMoving(direction)
-        return {downArray};
+        let downQueue = Object.assign({}, state.downQueue)
+        downQueue[floor] = 1
+        return {downQueue}
       })
     }
   }
@@ -69,6 +77,7 @@ class App extends React.Component {
       <div>--------------------------------------</div>
       <br/><br/>
       <h1>Outside the Elevator</h1>
+      {console.log('outside floor in app...', this.outsideFloor)}
       <OutsideElevator totalFloors={this.totalFloors} updateOutsideFloor={this.updateOutsideFloor} outsideFloor={this.outsideFloor}/>
     </div>
     )

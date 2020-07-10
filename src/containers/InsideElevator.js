@@ -4,9 +4,9 @@ import FloorButtonGrid from '../components/FloorButtonGrid';
 class InsideElevator extends Component {
 
     currentDirection = (direction) => {
-        if (direction == "up") {
+        if (direction === "up") {
             return "UP"
-        } else if (direction == "down") {
+        } else if (direction === "down") {
             return "DOWN"
         } else {
             return "NOT MOVING"
