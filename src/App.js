@@ -71,20 +71,18 @@ class App extends React.Component {
 
   render() {
     return (
-      <>
+      <div>
+        <br/>
       <Container>
-        <h1>Inside the Elevator</h1>      
         <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.totalFloors} addFloorToQueue={this.addFloorToQueue}/>
         <br/><br/>
       </Container>
         <Divider horizontal><Icon name='hand point up'/>Inside Elevator / <Icon name='hand point down'/>Outside Elevator</Divider>
         <Container>
         <br/><br/>
-        {/* <h1>Outside the Elevator</h1> */}
-        {console.log('outside floor in app...', this.outsideFloor)}
-        <OutsideElevator totalFloors={this.totalFloors} updateOutsideFloor={this.updateOutsideFloor} outsideFloor={this.state.outsideFloor}/>
+        <OutsideElevator totalFloors={this.totalFloors} updateOutsideFloor={this.updateOutsideFloor} outsideFloor={this.state.outsideFloor} addFloorToQueue={this.addFloorToQueue}/>
     </Container>
-    </>
+    </div>
     )
   }
 }

@@ -18,14 +18,14 @@ class InsideElevator extends Component {
         let {currentFloor, direction, totalFloors, addFloorToQueue} = this.props
         return (
             <div>
-
-        <h3>Current floor: {currentFloor}</h3>
-        <h3>Current direction: {this.currentDirection(direction)}</h3>
-        <br/>
-        <p>Select a floor:</p>
-        <FloorButtonGrid totalFloors={totalFloors} addFloorToQueue={addFloorToQueue} currentFloor={currentFloor} direction={direction}/>
-        <br/>
-      </div>
+                <p>Select a floor to travel to it.</p>
+                <h3>Current floor: {currentFloor}</h3>
+                <h3>Current direction: {this.currentDirection(direction)}</h3>
+                <br/>
+                <p>1. Select a floor:</p>
+                <FloorButtonGrid totalFloors={totalFloors} addFloorToQueue={addFloorToQueue} currentFloor={currentFloor} direction={direction}/>
+                <br/>
+            </div>
         )
     }
 

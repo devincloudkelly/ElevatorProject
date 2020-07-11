@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react'
 
 function OutsideElevator(props) {
     
-    let { totalFloors, updateOutsideFloor, outsideFloor} = props
+    let { totalFloors, updateOutsideFloor, outsideFloor, addFloorToQueue} = props
     console.log('these are all the props...', totalFloors, outsideFloor)
     console.log('here is outside floor', props.outsideFloor)
 
@@ -13,9 +13,11 @@ function OutsideElevator(props) {
         updateOutsideFloor(floor)
     }
 
+    // this function adds the requested floor to the upQueue or the downQueue
     let requestElevator = (e) => {
-        console.log('requesting current floor and direction', outsideFloor, e.target.value)
-
+        let direction = e.target.value
+        console.log('direction and outside floor from pushbutton', direction, outsideFloor)
+        return addFloorToQueue(outsideFloor, direction)
     }
 
     function createFloorButtons(nFloors) {  
