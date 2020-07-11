@@ -3,6 +3,7 @@ import FloorButtonGrid from '../components/FloorButtonGrid';
 
 class InsideElevator extends Component {
 
+    // provides stylized direction to component
     currentDirection = (direction) => {
         if (direction === "up") {
             return "UP"

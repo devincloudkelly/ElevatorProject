@@ -4,10 +4,9 @@ import OutsideElevator from './containers/OutsideElevator';
 import InsideElevator from './containers/InsideElevator';
 import { Container, Divider, Icon } from 'semantic-ui-react';
 
-class App extends React.Component {
-  
-  
+class App extends React.Component {  
   state = {
+    totalFloors: 9,
     currentFloor: 5,
     outsideFloor: 1,
     direction: 'none',
@@ -35,13 +34,13 @@ class App extends React.Component {
     },
   }
 
-  totalFloors = 9
-
+  // update outsideFloor in state
   updateOutsideFloor = (newFloor) => {
     console.log('updating outside floor in state', newFloor)
     this.setState({outsideFloor: newFloor})
   }
 
+  // IN PROGRESS..
   startMoving = (direction) => {
     // use this when you are addingFloorToQueue to start elevator if it is stationery.
     if (this.state.direction === "none"){
@@ -49,10 +48,8 @@ class App extends React.Component {
     }
   }
 
-  // working
+  // adds floor to approriate queue based on direction
   addFloorToQueue = (floor, direction) => {
-    console.log('from App, adding floor, direction', floor, direction)
-    console.log('adding floor to queue in App', floor, direction)
     if (direction === 'up'){
       this.setState(state => {
         let upQueue = Object.assign({}, state.upQueue)
@@ -74,13 +71,13 @@ class App extends React.Component {
       <div>
         <br/>
       <Container>
-        <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.totalFloors} addFloorToQueue={this.addFloorToQueue}/>
+        <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue}/>
         <br/><br/>
       </Container>
         <Divider horizontal><Icon name='hand point up'/>Inside Elevator / <Icon name='hand point down'/>Outside Elevator</Divider>
         <Container>
         <br/><br/>
-        <OutsideElevator totalFloors={this.totalFloors} updateOutsideFloor={this.updateOutsideFloor} outsideFloor={this.state.outsideFloor} addFloorToQueue={this.addFloorToQueue}/>
+        <OutsideElevator totalFloors={this.state.totalFloors} updateOutsideFloor={this.updateOutsideFloor} outsideFloor={this.state.outsideFloor} addFloorToQueue={this.addFloorToQueue}/>
     </Container>
     </div>
     )

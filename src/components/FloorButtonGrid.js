@@ -4,8 +4,7 @@ import { Button } from 'semantic-ui-react'
 let FloorButtonGrid = (props) => {
     let { totalFloors, addFloorToQueue, currentFloor } = props
 
-
-
+    // adds floor to appropriate queue in state
     function requestFloor(e) {
         let targetFloor = parseInt(e.target.id)
         console.log('target and current floor from pushbutton',targetFloor, currentFloor)
@@ -18,7 +17,8 @@ let FloorButtonGrid = (props) => {
         return null
     }
 
-    function createButtonGrid(nFloors) {
+    // creates floor buttons based on total floors
+    function createButtons(nFloors) {
         let floors = []
         for (let i = 1; i<=nFloors; i++){
             floors.push(i)
@@ -31,7 +31,7 @@ let FloorButtonGrid = (props) => {
     return (
         <div>
             <Button.Group>
-                {createButtonGrid(totalFloors)}
+                {createButtons(totalFloors)}
             </Button.Group>               
         </div>
     )
