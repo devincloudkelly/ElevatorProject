@@ -30,13 +30,15 @@ function OutsideElevator(props) {
             
         return(
             <div>
-                <h3>Current floor: {outsideFloor}</h3>
-                <br/><br/>
-                <p>Select a floor to simulate:</p>
+                <p>Select a floor then press the up or down button to simulate calling an elevator to that floor.</p>
+                <h3>Outside floor: {outsideFloor}</h3>
+                <br/>
+                <p>1. Select a floor to simulate:</p>
                 <Button.Group>
                     {createFloorButtons(totalFloors)}
                 </Button.Group>
                 <br/><br/>
+                <p>2. Select a direction</p>
                 <Button.Group>
                     <Button onClick={requestElevator} value="up">Up</Button>
                     <Button onClick={requestElevator} value="down">Down</Button>

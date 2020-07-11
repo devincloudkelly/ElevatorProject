@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import OutsideElevator from './containers/OutsideElevator';
 import InsideElevator from './containers/InsideElevator';
+import { Container, Divider, Icon } from 'semantic-ui-react';
 
 class App extends React.Component {
   
@@ -70,16 +71,20 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <>
+      <Container>
         <h1>Inside the Elevator</h1>      
-      <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.totalFloors} addFloorToQueue={this.addFloorToQueue}/>
-      <br/><br/>
-      <div>--------------------------------------</div>
-      <br/><br/>
-      <h1>Outside the Elevator</h1>
-      {console.log('outside floor in app...', this.outsideFloor)}
-      <OutsideElevator totalFloors={this.totalFloors} updateOutsideFloor={this.updateOutsideFloor} outsideFloor={this.outsideFloor}/>
-    </div>
+        <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.totalFloors} addFloorToQueue={this.addFloorToQueue}/>
+        <br/><br/>
+      </Container>
+        <Divider horizontal><Icon name='hand point up'/>Inside Elevator / <Icon name='hand point down'/>Outside Elevator</Divider>
+        <Container>
+        <br/><br/>
+        {/* <h1>Outside the Elevator</h1> */}
+        {console.log('outside floor in app...', this.outsideFloor)}
+        <OutsideElevator totalFloors={this.totalFloors} updateOutsideFloor={this.updateOutsideFloor} outsideFloor={this.state.outsideFloor}/>
+    </Container>
+    </>
     )
   }
 }
