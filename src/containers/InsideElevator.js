@@ -18,7 +18,7 @@ class InsideElevator extends Component {
     floorsRemainingDown = (currentFloor, queue, totalFloors) => {
         let floorCheck = currentFloor
         let remainingFloors = false
-        while (floorCheck < totalFloors) {
+        while (floorCheck > 1) {
             if (!queue[floorCheck - 1]) {
                 floorCheck -= 1
             } else {

@@ -94,7 +94,11 @@ class App extends React.Component {
       this.setState(state => {
         let downQueue = Object.assign({}, state.downQueue)
         downQueue[floor] = 1
-        return {downQueue}
+        if (floor < this.state.lowestDownFloor){
+         return {downQueue, lowestDownFloor: floor} 
+        } else {
+          return {downQueue}
+        }
       }, () => {this.startMoving(floor, currentFloor)})
       // })
     }
