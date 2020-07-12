@@ -97,7 +97,7 @@ class App extends React.Component {
       <div>
         <br/>
       <Container>
-        <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue} updatedCurrentFloor={this.updateCurrentFloor}/>
+        <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue} updateCurrentFloor={this.updateCurrentFloor} upQueue={this.state.upQueue} downQueue={this.state.downQueue}/>
         {/* <InsideElevator totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue}/> */}
         <br/><br/>
       </Container>

@@ -3,18 +3,42 @@ import FloorButtonGrid from '../components/FloorButtonGrid';
 
 class InsideElevator extends Component {
 
-    componentDidUpdate(prevProps) {
-        if (this.props.direction !== prevProps.direction){
-            let currentFloor = this.props.currentFloor
-            let direction = this.props.direction
-            let updateCurrentFloor = this.props.updateCurrentFloor
-            
-            if (this.props.direction !== 'none') {
-                console.log('time to get this elevator moving..', currentFloor, direction)
-
+    floorsRemaining = (currentFloor, queue, totalFloors) => {
+        let floorCheck = currentFloor + 1
+        let remainingFloors = false
+        while (floorCheck < totalFloors) {
+            if (!queue[floorCheck]) {
+                floorCheck += 1
+            } else {
+                return true
             }
         }
     }
+
+    componentDidUpdate(prevProps) {
+        if ((this.props.direction !== prevProps.direction) || (this.props.currentFloor !== prevProps.currentFloor)){
+            let currentFloor = this.props.currentFloor
+            let direction = this.props.direction
+            let updateCurrentFloor = this.props.updateCurrentFloor
+            let upQueue = this.props.upQueue
+            let downQueue = this.props.downQueue
+            let totalFloors = this.props.totalFloors
+            let floorCheck = currentFloor + 1
+
+            if (direction === 'up') {
+                console.log('time to get this elevator moving..', currentFloor, direction)
+                // check if true values above current floor.
+                // if so, move up one floor.
+                if (this.floorsRemaining(currentFloor, upQueue, totalFloors)) {
+                    setTimeout(() => {
+                        updateCurrentFloor(currentFloor + 1)
+                    }, 1000);
+                }
+            }
+        }
+    }
+
+    
 
     // provides stylized direction to component
     currentDirection = (direction) => {
