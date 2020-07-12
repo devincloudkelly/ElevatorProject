@@ -34,13 +34,23 @@ class App extends React.Component {
     },
   }
 
+  componentDidMount() {
+    // check is direction is !'none'
+    // check if direction is up
+    // if true, check for more true floors above. If there are, then set timeout to update current floor in 1 second.
+    //  if there are no more floors, check if downqueue has any true values. 
+    //  if downqueue has any true values, navigate to highest value, one floor at a time. 
+
+    // save highestDownFloor as a state value and lowestUpFloor. 
+  }
+
   // update outsideFloor in state
   updateOutsideFloor = (newFloor) => {
     console.log('updating outside floor in state', newFloor)
     this.setState({outsideFloor: newFloor})
   }
 
-  // IN PROGRESS..
+  // puts elevator in motion, either up or down.
   startMoving = (requestFloor, currentFloor) => {
     let direction;
     // use this when you are addingFloorToQueue to start elevator if it is stationery.
