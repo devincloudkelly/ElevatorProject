@@ -3,6 +3,19 @@ import FloorButtonGrid from '../components/FloorButtonGrid';
 
 class InsideElevator extends Component {
 
+    componentDidUpdate(prevProps) {
+        if (this.props.direction !== prevProps.direction){
+            let currentFloor = this.props.currentFloor
+            let direction = this.props.direction
+            let updateCurrentFloor = this.props.updateCurrentFloor
+            
+            if (this.props.direction !== 'none') {
+                console.log('time to get this elevator moving..', currentFloor, direction)
+
+            }
+        }
+    }
+
     // provides stylized direction to component
     currentDirection = (direction) => {
         if (direction === "up") {

@@ -8,8 +8,8 @@ class App extends React.Component {
   state = {
     totalFloors: 9,
     currentFloor: 5,
-    outsideFloor: 1,
     direction: 'none',
+    outsideFloor: 1,
     upQueue: {
       1:0,
       2:0,
@@ -42,12 +42,18 @@ class App extends React.Component {
     //  if downqueue has any true values, navigate to highest value, one floor at a time. 
 
     // save highestDownFloor as a state value and lowestUpFloor. 
+
   }
 
   // update outsideFloor in state
   updateOutsideFloor = (newFloor) => {
     console.log('updating outside floor in state', newFloor)
     this.setState({outsideFloor: newFloor})
+  }
+
+  updateCurrentFloor = (newFloor) => {
+    console.log('updating currentFloor in state', newFloor)
+    this.setState({currentFloor: newFloor})
   }
 
   // puts elevator in motion, either up or down.
@@ -74,6 +80,7 @@ class App extends React.Component {
         upQueue[floor] = 1
         return {upQueue}
       }, () => {this.startMoving(floor, currentFloor)})
+      // })
     }
     if (direction === 'down'){
       this.setState(state => {
@@ -81,6 +88,7 @@ class App extends React.Component {
         downQueue[floor] = 1
         return {downQueue}
       }, () => {this.startMoving(floor, currentFloor)})
+      // })
     }
   }
 
@@ -89,7 +97,8 @@ class App extends React.Component {
       <div>
         <br/>
       <Container>
-        <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue}/>
+        <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue} updatedCurrentFloor={this.updateCurrentFloor}/>
+        {/* <InsideElevator totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue}/> */}
         <br/><br/>
       </Container>
         <Divider horizontal><Icon name='hand point up'/>Inside Elevator / <Icon name='hand point down'/>Outside Elevator</Divider>
