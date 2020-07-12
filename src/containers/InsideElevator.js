@@ -25,7 +25,7 @@ class InsideElevator extends Component {
         }
     }
 
-    findHighestDownFloor = (currentFloor, totalFloors, downQueue) => {
+    findHighestDownFloor = (totalFloors, downQueue) => {
         let counter = totalFloors
         while (counter > 1) {
             if (downQueue[counter]) {
@@ -34,6 +34,20 @@ class InsideElevator extends Component {
             } else {
                 console.log('decrementing counter from find highest...')
                 counter -= 1
+            }
+        }
+        return counter
+    }
+
+    findLowestUpFloor = (totalFloors, upQueue) => {
+        let counter = totalFloors
+        while (counter < totalFloors) {
+            if (upQueue[counter]) {
+                console.log('returning true from find lowest...')
+                return counter
+            } else {
+                console.log('incrementing counter from find lowest...')
+                counter += 1
             }
         }
         return counter
@@ -52,16 +66,16 @@ class InsideElevator extends Component {
 
             if (direction === 'up') {
                 console.log('time to get this elevator moving..', currentFloor, direction)
-                // check if true values above current floor exist. If so, move up one floor.
+                // check if floor values set to true above current floor exist. If so, move up one floor.
                 if (this.floorsRemainingUp(currentFloor, upQueue, totalFloors)) {
                     setTimeout(() => {
                         visitUpFloor(currentFloor + 1)
                     }, 1000)
-                // if no true values above exist, checks if the downQueue has any true values
+                // if no floors, checks if the downQueue has any true values
                 } else if (this.floorsRemainingDown(currentFloor, downQueue)) {
                     console.log('done going up, there are downValues to go to now...')
-                    console.log(this.findHighestDownFloor(currentFloor, totalFloors, downQueue))
-                    let highestDownFloor = this.findHighestDownFloor(currentFloor, totalFloors, downQueue)
+                    console.log(this.findHighestDownFloor(totalFloors, downQueue))
+                    let highestDownFloor = this.findHighestDownFloor(totalFloors, downQueue)
                     if ( highestDownFloor > currentFloor){
                         setTimeout(() => {
                             visitUpFloor(currentFloor + 1)
@@ -82,6 +96,20 @@ class InsideElevator extends Component {
                     setTimeout(() => {
                         visitDownFloor(currentFloor - 1)
                     }, 1000);
+                } else if (this.floorsRemainingUp(currentFloor, upQueue)) {
+                    console.log('done going up, there are downValues to go to now...')
+                    console.log(this.findHighestDownFloor(totalFloors, upQueue))
+                    let lowestUpFloor = this.findHighestDownFloor(totalFloors, upQueue)
+                    if ( lowestUpFloor < currentFloor){
+                        setTimeout(() => {
+                            visitUpFloor(currentFloor - 1)
+                        }, 1000)
+                    } else {
+                        console.log('going to change direction...')
+                        changeDirection(lowestUpFloor,currentFloor)
+                    }
+                    // if it does, check for highest down floor. If it's above, keep moving up one floor per second.
+                    // if it's equal to current floor or below, update direction to down
                 }
             }
         }
