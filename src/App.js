@@ -32,6 +32,8 @@ class App extends React.Component {
       8:0,
       9:0,
     },
+    highestUpFloor: 1,
+    lowestDownFloor: 9,
   }
 
   componentDidMount() {
@@ -64,8 +66,10 @@ class App extends React.Component {
       if (requestFloor < currentFloor) {
         direction = 'down'
       }
-      if (requestFloor > currentFloor) {
+      else if (requestFloor > currentFloor) {
         direction = 'up'
+      } else {
+        direction = 'none'
       }
       this.setState({direction: direction})
     }
@@ -78,7 +82,11 @@ class App extends React.Component {
       this.setState(state => {
         let upQueue = Object.assign({}, state.upQueue)
         upQueue[floor] = 1
-        return {upQueue}
+        if (floor > this.state.highestUpFloor) {
+          return {upQueue, highestUpFloor: floor}
+        } else {
+          return {upQueue}
+        }
       }, () => {this.startMoving(floor, currentFloor)})
       // })
     }
@@ -97,7 +105,7 @@ class App extends React.Component {
       <div>
         <br/>
       <Container>
-        <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue} updateCurrentFloor={this.updateCurrentFloor} upQueue={this.state.upQueue} downQueue={this.state.downQueue}/>
+        <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue} updateCurrentFloor={this.updateCurrentFloor} upQueue={this.state.upQueue} downQueue={this.state.downQueue} highestUpFloor={this.state.highestUpFloor} lowestDownFloor={this.state.lowestDownFloor}/>
         {/* <InsideElevator totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue}/> */}
         <br/><br/>
       </Container>

@@ -3,11 +3,11 @@ import FloorButtonGrid from '../components/FloorButtonGrid';
 
 class InsideElevator extends Component {
 
-    floorsRemaining = (currentFloor, queue, totalFloors) => {
-        let floorCheck = currentFloor + 1
+    floorsRemainingUp = (currentFloor, queue, totalFloors) => {
+        let floorCheck = currentFloor
         let remainingFloors = false
         while (floorCheck < totalFloors) {
-            if (!queue[floorCheck]) {
+            if (!queue[floorCheck + 1]) {
                 floorCheck += 1
             } else {
                 return true
@@ -15,23 +15,47 @@ class InsideElevator extends Component {
         }
     }
 
+    floorsRemainingDown = (currentFloor, queue, totalFloors) => {
+        let floorCheck = currentFloor
+        let remainingFloors = false
+        while (floorCheck < totalFloors) {
+            if (!queue[floorCheck - 1]) {
+                floorCheck -= 1
+            } else {
+                return true
+            }
+        }
+    }
+
     componentDidUpdate(prevProps) {
-        if ((this.props.direction !== prevProps.direction) || (this.props.currentFloor !== prevProps.currentFloor)){
+        if ((this.props.direction !== prevProps.direction) || (this.props.currentFloor !== prevProps.currentFloor) || (this.props.highestUpFloor !== prevProps.highestUpFloor) || (this.props.lowestDownFloor !== prevProps.lowestDownFloor)){
             let currentFloor = this.props.currentFloor
             let direction = this.props.direction
             let updateCurrentFloor = this.props.updateCurrentFloor
             let upQueue = this.props.upQueue
             let downQueue = this.props.downQueue
             let totalFloors = this.props.totalFloors
-            let floorCheck = currentFloor + 1
+            let floorCheck = currentFloor
+            let highestUpFloor = this.props.highestUpFloor
+            let lowestDownFloor = this.props.lowestDownFloor
 
             if (direction === 'up') {
                 console.log('time to get this elevator moving..', currentFloor, direction)
                 // check if true values above current floor.
                 // if so, move up one floor.
-                if (this.floorsRemaining(currentFloor, upQueue, totalFloors)) {
+                if (this.floorsRemainingUp(currentFloor, upQueue, totalFloors)) {
                     setTimeout(() => {
                         updateCurrentFloor(currentFloor + 1)
+                    }, 1000);
+                }
+            }
+            if (direction === 'down') {
+                console.log('time to get this elevator moving..', currentFloor, direction)
+                // check if true values above current floor.
+                // if so, move up one floor.
+                if (this.floorsRemainingDown(currentFloor, downQueue, totalFloors)) {
+                    setTimeout(() => {
+                        updateCurrentFloor(currentFloor - 1)
                     }, 1000);
                 }
             }
