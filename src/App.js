@@ -33,35 +33,24 @@ class App extends React.Component {
       9:0,
     },
     highestUpFloor: 1,
+    lowestUpFloor: 9,
     lowestDownFloor: 9,
-  }
-
-  componentDidMount() {
-    // check is direction is !'none'
-    // check if direction is up
-    // if true, check for more true floors above. If there are, then set timeout to update current floor in 1 second.
-    //  if there are no more floors, check if downqueue has any true values. 
-    //  if downqueue has any true values, navigate to highest value, one floor at a time. 
-
-    // save highestDownFloor as a state value and lowestUpFloor. 
-
+    highestDownFloor: 1,
   }
 
   // update outsideFloor in state
   updateOutsideFloor = (newFloor) => {
-    console.log('updating outside floor in state', newFloor)
     this.setState({outsideFloor: newFloor})
   }
 
+  // update currentFloor in state
   updateCurrentFloor = (newFloor) => {
-    console.log('updating currentFloor in state', newFloor)
     this.setState({currentFloor: newFloor})
   }
 
-  // puts elevator in motion, either up or down.
-  startMoving = (requestFloor, currentFloor) => {
+  // changes elevator direction
+  changeDirection = (requestFloor, currentFloor) => {
     let direction;
-    // use this when you are addingFloorToQueue to start elevator if it is stationery.
     if (this.state.direction === "none"){
       if (requestFloor < currentFloor) {
         direction = 'down'
@@ -79,6 +68,7 @@ class App extends React.Component {
   addFloorToQueue = (floor, direction) => {
     let currentFloor = this.state.currentFloor
     if (direction === 'up'){
+      let lowestUpFloor = floor < this.state.lowesUpFloor ? {lowestUpFloor: floor} : null
       this.setState(state => {
         let upQueue = Object.assign({}, state.upQueue)
         upQueue[floor] = 1
@@ -87,8 +77,7 @@ class App extends React.Component {
         } else {
           return {upQueue}
         }
-      }, () => {this.startMoving(floor, currentFloor)})
-      // })
+      }, () => {this.changeDirection(floor, currentFloor)})
     }
     if (direction === 'down'){
       this.setState(state => {
@@ -99,8 +88,7 @@ class App extends React.Component {
         } else {
           return {downQueue}
         }
-      }, () => {this.startMoving(floor, currentFloor)})
-      // })
+      }, () => {this.changeDirection(floor, currentFloor)})
     }
   }
 
@@ -109,14 +97,29 @@ class App extends React.Component {
       <div>
         <br/>
       <Container>
-        <InsideElevator currentFloor={this.state.currentFloor} direction={this.state.direction} totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue} updateCurrentFloor={this.updateCurrentFloor} upQueue={this.state.upQueue} downQueue={this.state.downQueue} highestUpFloor={this.state.highestUpFloor} lowestDownFloor={this.state.lowestDownFloor}/>
-        {/* <InsideElevator totalFloors={this.state.totalFloors} addFloorToQueue={this.addFloorToQueue}/> */}
+        <InsideElevator 
+          currentFloor={this.state.currentFloor} 
+          direction={this.state.direction} 
+          totalFloors={this.state.totalFloors} 
+          addFloorToQueue={this.addFloorToQueue} 
+          updateCurrentFloor={this.updateCurrentFloor} 
+          upQueue={this.state.upQueue} 
+          downQueue={this.state.downQueue} 
+          highestUpFloor={this.state.highestUpFloor} 
+          lowestDownFloor={this.state.lowestDownFloor}
+          changeDirection={this.changeDirection}  
+        />
         <br/><br/>
       </Container>
         <Divider horizontal><Icon name='hand point up'/>Inside Elevator / <Icon name='hand point down'/>Outside Elevator</Divider>
         <Container>
         <br/><br/>
-        <OutsideElevator totalFloors={this.state.totalFloors} updateOutsideFloor={this.updateOutsideFloor} outsideFloor={this.state.outsideFloor} addFloorToQueue={this.addFloorToQueue}/>
+        <OutsideElevator 
+          totalFloors={this.state.totalFloors} 
+          updateOutsideFloor={this.updateOutsideFloor} 
+          outsideFloor={this.state.outsideFloor} 
+          addFloorToQueue={this.addFloorToQueue}
+        />
     </Container>
     </div>
     )
