@@ -42,8 +42,8 @@ function OutsideElevator(props) {
                 <br/><br/>
                 <p>2. Select a direction</p>
                 <Button.Group>
-                    <Button onClick={requestElevator} value="up">Up</Button>
-                    <Button onClick={requestElevator} value="down">Down</Button>
+                    {outsideFloor === 9 ? null : <Button onClick={requestElevator} value="up">Up</Button>}
+                    {outsideFloor === 1 ? null: <Button onClick={requestElevator} value="down">Down</Button>}
                 </Button.Group>
             </div>
         )
