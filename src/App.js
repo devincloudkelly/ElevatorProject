@@ -33,9 +33,7 @@ class App extends React.Component {
       9:0,
     },
     highestUpFloor: 1,
-    lowestUpFloor: 9,
     lowestDownFloor: 9,
-    highestDownFloor: 1,
   }
 
   // update outsideFloor in state
@@ -48,19 +46,41 @@ class App extends React.Component {
     this.setState({currentFloor: newFloor})
   }
 
+  // when a floor is visited, you update the currentFloor and remove it from the appropriate queue
+  visitUpFloor = (floor, upQueue) => {
+    this.updateCurrentFloor(floor)
+    // logic to remove floor from appropriate queue
+    this.setState(state => {
+      let upQueue = Object.assign({}, state.upQueue)
+      upQueue[floor] = 0
+      return {upQueue}
+    })
+  }
+
+  visitDownFloor = (floor, downQueue) => {
+    console.log('visiting down floor..')
+    this.updateCurrentFloor(floor)
+    this.setState(state => {
+      let downQueue = Object.assign({}, state.downQueue)
+      downQueue[floor] = 0
+      return {downQueue}
+    })
+  }
+
   // changes elevator direction
   changeDirection = (requestFloor, currentFloor) => {
-    let direction;
+    console.log('changing direction...', requestFloor, currentFloor)
+    let newDirection;
     if (this.state.direction === "none"){
       if (requestFloor < currentFloor) {
-        direction = 'down'
+        newDirection = 'down'
       }
       else if (requestFloor > currentFloor) {
-        direction = 'up'
+        newDirection = 'up'
       } else {
-        direction = 'none'
+        newDirection = 'none'
       }
-      this.setState({direction: direction})
+      this.setState({direction: newDirection}, () => {console.log('this is the updated state', this.state.direction)})
     }
   }
 
@@ -68,7 +88,6 @@ class App extends React.Component {
   addFloorToQueue = (floor, direction) => {
     let currentFloor = this.state.currentFloor
     if (direction === 'up'){
-      let lowestUpFloor = floor < this.state.lowesUpFloor ? {lowestUpFloor: floor} : null
       this.setState(state => {
         let upQueue = Object.assign({}, state.upQueue)
         upQueue[floor] = 1
@@ -92,6 +111,10 @@ class App extends React.Component {
     }
   }
 
+  removeFloorFromQueue = (floor, queue) => {
+    console.log('removing floor from queue', floor, queue)
+  }
+
   render() {
     return (
       <div>
@@ -102,7 +125,8 @@ class App extends React.Component {
           direction={this.state.direction} 
           totalFloors={this.state.totalFloors} 
           addFloorToQueue={this.addFloorToQueue} 
-          updateCurrentFloor={this.updateCurrentFloor} 
+          visitUpFloor={this.visitUpFloor}
+          visitDownFloor={this.visitDownFloor}
           upQueue={this.state.upQueue} 
           downQueue={this.state.downQueue} 
           highestUpFloor={this.state.highestUpFloor} 
