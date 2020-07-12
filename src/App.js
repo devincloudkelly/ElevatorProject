@@ -41,28 +41,36 @@ class App extends React.Component {
   }
 
   // IN PROGRESS..
-  startMoving = (direction) => {
+  startMoving = (requestFloor, currentFloor) => {
+    let direction;
     // use this when you are addingFloorToQueue to start elevator if it is stationery.
     if (this.state.direction === "none"){
+      if (requestFloor < currentFloor) {
+        direction = 'down'
+      }
+      if (requestFloor > currentFloor) {
+        direction = 'up'
+      }
       this.setState({direction: direction})
     }
   }
 
   // adds floor to approriate queue based on direction
   addFloorToQueue = (floor, direction) => {
+    let currentFloor = this.state.currentFloor
     if (direction === 'up'){
       this.setState(state => {
         let upQueue = Object.assign({}, state.upQueue)
         upQueue[floor] = 1
         return {upQueue}
-      })
+      }, () => {this.startMoving(floor, currentFloor)})
     }
     if (direction === 'down'){
       this.setState(state => {
         let downQueue = Object.assign({}, state.downQueue)
         downQueue[floor] = 1
         return {downQueue}
-      })
+      }, () => {this.startMoving(floor, currentFloor)})
     }
   }
 
