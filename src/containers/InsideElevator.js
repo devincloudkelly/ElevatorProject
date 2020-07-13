@@ -88,8 +88,9 @@ class InsideElevator extends Component {
                         console.log('going to change direction...')
                         changeDirection(highestDownFloor,currentFloor)
                     }
-                    // if it does, check for highest down floor. If it's above, keep moving up one floor per second.
-                    // if it's equal to current floor or below, update direction to down
+
+                } else {
+                    changeDirection(0,0)
                 }
             }
             if (direction === 'down') {
@@ -114,6 +115,8 @@ class InsideElevator extends Component {
                     }
                     // if it does, check for highest down floor. If it's above, keep moving up one floor per second.
                     // if it's equal to current floor or below, update direction to down
+                } else {
+                    changeDirection(0,0)
                 }
             }
         }
