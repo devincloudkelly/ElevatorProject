@@ -71,7 +71,7 @@ class App extends React.Component {
   changeDirection = (requestFloor, currentFloor) => {
     console.log('changing direction...', requestFloor, currentFloor)
     let newDirection;
-    if (this.state.direction === "none"){
+    // if (this.state.direction === "none"){
       if (requestFloor < currentFloor) {
         newDirection = 'down'
       }
@@ -80,8 +80,8 @@ class App extends React.Component {
       } else {
         newDirection = 'none'
       }
-      this.setState({direction: newDirection}, () => {console.log('this is the updated state', this.state.direction)})
-    }
+      this.setState({direction: newDirection})
+    // }
   }
 
   // adds floor to approriate queue based on direction

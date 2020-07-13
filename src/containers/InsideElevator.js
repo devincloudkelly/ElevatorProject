@@ -3,6 +3,7 @@ import FloorButtonGrid from '../components/FloorButtonGrid';
 
 class InsideElevator extends Component {
 
+    // checks to see if any floors remain above current floor in upQueue
     floorsRemainingUp = (currentFloor, queue, totalFloors) => {
         let floorCheck = currentFloor
         while (floorCheck < totalFloors) {
@@ -14,6 +15,7 @@ class InsideElevator extends Component {
         }
     }
 
+    // checks to see if any floors remain below current floor in downQueue
     floorsRemainingDown = (currentFloor, queue) => {
         let floorCheck = currentFloor
         while (floorCheck > 1) {
@@ -25,6 +27,7 @@ class InsideElevator extends Component {
         }
     }
 
+    // returns the highest floor in the downQueue
     findHighestDownFloor = (totalFloors, downQueue) => {
         let counter = totalFloors
         while (counter > 1) {
@@ -39,8 +42,9 @@ class InsideElevator extends Component {
         return counter
     }
 
+    // returns lowest floor in the upQueue
     findLowestUpFloor = (totalFloors, upQueue) => {
-        let counter = totalFloors
+        let counter = 1
         while (counter < totalFloors) {
             if (upQueue[counter]) {
                 console.log('returning true from find lowest...')
@@ -74,7 +78,7 @@ class InsideElevator extends Component {
                 // if no floors, checks if the downQueue has any true values
                 } else if (this.floorsRemainingDown(currentFloor, downQueue)) {
                     console.log('done going up, there are downValues to go to now...')
-                    console.log(this.findHighestDownFloor(totalFloors, downQueue))
+                    console.log('here is the return from highest down floor', this.findHighestDownFloor(totalFloors, downQueue))
                     let highestDownFloor = this.findHighestDownFloor(totalFloors, downQueue)
                     if ( highestDownFloor > currentFloor){
                         setTimeout(() => {
