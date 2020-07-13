@@ -32,8 +32,8 @@ class App extends React.Component {
       8:0,
       9:0,
     },
-    highestUpFloor: 1,
-    lowestDownFloor: 9,
+    hasUpFloors: 0,
+    hasDownFloors: 0,
   }
 
   // update outsideFloor in state
@@ -46,8 +46,15 @@ class App extends React.Component {
     this.setState({currentFloor: newFloor})
   }
 
+  hasNoFloors = (direction) => {
+    console.log('updatings has no floors state...', direction)
+    direction === 'up' ? 
+    this.setState({hasUpFloors: 0}) :
+    this.setState({hasDownFloors: 0})
+  }
+
   // when a floor is visited, you update the currentFloor and remove it from the appropriate queue
-  visitUpFloor = (floor, upQueue) => {
+  visitUpFloor = (floor) => {
     this.updateCurrentFloor(floor)
     // logic to remove floor from appropriate queue
     this.setState(state => {
@@ -57,7 +64,7 @@ class App extends React.Component {
     })
   }
 
-  visitDownFloor = (floor, downQueue) => {
+  visitDownFloor = (floor) => {
     console.log('visiting down floor..')
     this.updateCurrentFloor(floor)
     this.setState(state => {
@@ -89,11 +96,11 @@ class App extends React.Component {
       this.setState(state => {
         let upQueue = Object.assign({}, state.upQueue)
         upQueue[floor] = 1
-        if (floor > this.state.highestUpFloor) {
-          return {upQueue, highestUpFloor: floor}
-        } else {
-          return {upQueue}
-        }
+        // if (floor > this.state.highestUpFloor) {
+        //   return {upQueue, highestUpFloor: floor}
+        // } else {
+          return {upQueue, hasUpFloors: 1}
+        // }
       }, () => {
         if (this.state.direction === 'none'){
         this.changeDirection(floor, currentFloor)
@@ -104,11 +111,11 @@ class App extends React.Component {
       this.setState(state => {
         let downQueue = Object.assign({}, state.downQueue)
         downQueue[floor] = 1
-        if (floor < this.state.lowestDownFloor){
-         return {downQueue, lowestDownFloor: floor} 
-        } else {
-          return {downQueue}
-        }
+        // if (floor < this.state.lowestDownFloor){
+        //  return {downQueue, lowestDownFloor: floor} 
+        // } else {
+          return {downQueue, hasDownFloors: 1}
+        // }
       }, () => {
         if (this.state.direction === 'none'){
         this.changeDirection(floor, currentFloor)
@@ -138,6 +145,9 @@ class App extends React.Component {
           highestUpFloor={this.state.highestUpFloor} 
           lowestDownFloor={this.state.lowestDownFloor}
           changeDirection={this.changeDirection}  
+          hasNoFloors={this.hasNoFloors}
+          hasUpFloors={this.state.hasUpFloors}
+          hasDownFloors={this.state.hasDownFloors}
         />
         <br/><br/>
       </Container>
