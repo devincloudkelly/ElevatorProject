@@ -9,8 +9,8 @@ This app allows you to mimic an elevator's operations, both from the inside and 
 The project is built entirely in React and has the following component structure:
 
 -App
- - InsideElevator
-  - ButtonGrid
+ -InsideElevator
+  -ButtonGrid
  -OutsideElevator
  
  State is stored in App and passed down where necessary. 
@@ -19,7 +19,7 @@ The project is built entirely in React and has the following component structure
 
 To install:
 
-- `Clone` this repo to your computer
+- Clone this repo to your computer
 - `cd` into this project
 - run `npm start` to start up a local server
 - The app will open in localhost:8000 on your preferred browser
@@ -34,7 +34,7 @@ Each view has an indicator of which floor they are on, ex. Inside the elevator w
 - Press the floor you wish to simulate
 - Then press the direction you wish to go
 
-### To go to a floor fro inside
+### To go to a floor from inside
 - Press any button, and the elevator will move accordingly.
 - If you press the same floor as you are currently on (and there are no other pending requests) you will not go anywhere
 
