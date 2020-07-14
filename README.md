@@ -8,12 +8,13 @@ This app allows you to mimic an elevator's operations, both from the inside and 
 
 The project is built entirely in React and has the following component structure:
 
- -App
-  -InsideElevator
-   -ButtonGrid
-  -OutsideElevator
+            App
+            |   \
+InsideElevator  OutsideElevator
+            |
+    ButtonGrid
  
- State is stored in App and passed down where necessary. 
+State is stored in App and passed down where necessary. 
 
 ### Installation
 
