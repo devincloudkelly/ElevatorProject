@@ -67,7 +67,7 @@ class InsideElevator extends Component {
         changeDirection,
       } = this.props;
 
-    //   start up logic
+    //   start 'up' logic
     if (direction === "up") {
         if (this.floorsRemainingUp(currentFloor, upQueue)) {
             setTimeout(() => {
@@ -87,7 +87,7 @@ class InsideElevator extends Component {
             changeDirection(highestDownFloor, currentFloor);
         }
 
-    //   start down logic
+    //   start 'down' logic
     } else if (direction === 'down'){
       if (this.floorsRemainingDown(currentFloor, downQueue)){
           setTimeout(() => {

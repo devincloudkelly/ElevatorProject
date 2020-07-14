@@ -32,8 +32,6 @@ class App extends React.Component {
       8:0,
       9:0,
     },
-    hasUpFloors: 0,
-    hasDownFloors: 0,
   }
 
   // update outsideFloor in state
@@ -46,7 +44,7 @@ class App extends React.Component {
     this.setState({currentFloor: newFloor})
   }
 
-  // when a floor is visited, you update the currentFloor and remove it from the appropriate queue
+  // update currentFloor and visited floor from queue
   visitUpFloor = (floor) => {
     this.updateCurrentFloor(floor)
     // logic to remove floor from appropriate queue
@@ -57,6 +55,7 @@ class App extends React.Component {
     })
   }
 
+  // update current floor and remove visited floor from queue
   visitDownFloor = (floor) => {
     this.updateCurrentFloor(floor)
     this.setState(state => {
@@ -87,7 +86,7 @@ class App extends React.Component {
       this.setState(state => {
         let upQueue = Object.assign({}, state.upQueue)
         upQueue[floor] = 1
-          return {upQueue, hasUpFloors: 1}
+          return {upQueue}
       }, () => {
         if (this.state.direction === 'none'){
         this.changeDirection(floor, currentFloor)
@@ -98,7 +97,7 @@ class App extends React.Component {
       this.setState(state => {
         let downQueue = Object.assign({}, state.downQueue)
         downQueue[floor] = 1
-          return {downQueue, hasDownFloors: 1}
+          return {downQueue}
       }, () => {
         if (this.state.direction === 'none'){
         this.changeDirection(floor, currentFloor)
@@ -113,19 +112,15 @@ class App extends React.Component {
         <br/>
       <Container>
         <InsideElevator 
-          currentFloor={this.state.currentFloor} 
-          direction={this.state.direction} 
-          totalFloors={this.state.totalFloors} 
           addFloorToQueue={this.addFloorToQueue} 
           visitUpFloor={this.visitUpFloor}
           visitDownFloor={this.visitDownFloor}
+          changeDirection={this.changeDirection}  
+          currentFloor={this.state.currentFloor} 
+          direction={this.state.direction} 
+          totalFloors={this.state.totalFloors} 
           upQueue={this.state.upQueue} 
           downQueue={this.state.downQueue} 
-          highestUpFloor={this.state.highestUpFloor} 
-          lowestDownFloor={this.state.lowestDownFloor}
-          changeDirection={this.changeDirection}  
-          hasUpFloors={this.state.hasUpFloors}
-          hasDownFloors={this.state.hasDownFloors}
         />
         <br/><br/>
       </Container>
@@ -134,8 +129,8 @@ class App extends React.Component {
         <br/><br/>
         <OutsideElevator 
           totalFloors={this.state.totalFloors} 
-          updateOutsideFloor={this.updateOutsideFloor} 
           outsideFloor={this.state.outsideFloor} 
+          updateOutsideFloor={this.updateOutsideFloor} 
           addFloorToQueue={this.addFloorToQueue}
         />
     </Container>
