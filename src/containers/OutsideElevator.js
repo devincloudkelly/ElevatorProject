@@ -8,14 +8,12 @@ function OutsideElevator(props) {
     // updates 'outsideFloor' in state
     function updateFloor(e) {
         let floor = parseInt(e.target.id)
-        console.log('hello, updating the floor', floor)
         updateOutsideFloor(floor)
     }
 
     // adds the requested floor to the upQueue or the downQueue
     let requestElevator = (e) => {
         let direction = e.target.value
-        console.log('direction and outside floor from pushbutton', direction, outsideFloor)
         return addFloorToQueue(outsideFloor, direction)
     }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import FloorButtonGrid from '../components/FloorButtonGrid';
 
 class InsideElevator extends Component {
-  // checks to see if any floors remain above current floor in upQueue
+  // checks to see if any floors remain above current floor in given queue
   floorsRemainingUp = (currentFloor, queue) => {
     let floorCheck = currentFloor;
     let totalFloors = this.props.totalFloors;
@@ -15,7 +15,7 @@ class InsideElevator extends Component {
     }
   };
 
-  // checks to see if any floors remain below current floor in downQueue
+  // checks to see if any floors remain below current floor in given queue
   floorsRemainingDown = (currentFloor, queue) => {
     let floorCheck = currentFloor;
     while (floorCheck > 1) {
@@ -33,10 +33,8 @@ class InsideElevator extends Component {
     let counter = totalFloors;
     while (counter > 1) {
       if (downQueue[counter]) {
-        console.log("returning true from find highest...");
         return counter;
       } else {
-        console.log("decrementing counter from find highest...");
         counter -= 1;
       }
     }
@@ -48,18 +46,12 @@ class InsideElevator extends Component {
     let counter = 1;
     while (counter < totalFloors) {
       if (upQueue[counter]) {
-        console.log("returning true from find lowest...");
         return counter;
       } else {
-        console.log("incrementing counter from find lowest...");
         counter += 1;
       }
     }
     return counter;
-  };
-
-  updateHasFloors = (direction) => {
-    return this.props.hasNoFloors(direction);
   };
 
   componentDidUpdate(prevProps) {
@@ -73,67 +65,47 @@ class InsideElevator extends Component {
         downQueue,
         totalFloors,
         changeDirection,
-        hasUpFloors,
-        hasDownFloors,
       } = this.props;
 
     //   start up logic
     if (direction === "up") {
         if (this.floorsRemainingUp(currentFloor, upQueue)) {
-            console.log('up going through up queue')
             setTimeout(() => {
                 visitUpFloor(currentFloor + 1);
             }, 1000);
         }
         if ((!this.floorsRemainingUp(currentFloor, upQueue)) && (this.floorsRemainingUp(currentFloor, downQueue))) {
-            // this.updateHasFloors('up')
-            console.log('up, gong through down queue')
             setTimeout(() => {
                 visitUpFloor(currentFloor + 1);
             }, 1000);
         }
         if ((!this.floorsRemainingUp(currentFloor, upQueue)) && (!this.floorsRemainingUp(currentFloor, downQueue))){ 
-            // this.updateHasFloors('up')
-            console.log('are we finding highest down floor?')
                 let highestDownFloor = this.findHighestDownFloor(totalFloors,downQueue);
                 if (highestDownFloor === currentFloor) {
                     visitDownFloor(currentFloor)
                 }
-            console.log("going to change direction...");
             changeDirection(highestDownFloor, currentFloor);
         }
-        // if ((hasUpFloors === 0 && hasDownFloors === 0)) {
-        //   console.log("has no floors...from up");
-        //   changeDirection(0, 0);
-        // }
-    } else if (direction === 'down'){
+
     //   start down logic
+    } else if (direction === 'down'){
       if (this.floorsRemainingDown(currentFloor, downQueue)){
-          console.log("down, going through down queue");
           setTimeout(() => {
             visitDownFloor(currentFloor - 1);
           }, 1000);
         }
         if ((!this.floorsRemainingDown(currentFloor, downQueue)) && (this.floorsRemainingDown(currentFloor, upQueue))) {
-            // this.updateHasFloors('down')
-            console.log('down, no more down queue, going to up queue')
             setTimeout(() => {
                 visitDownFloor(currentFloor - 1);
             }, 1000);
             }
         if ((!this.floorsRemainingDown(currentFloor, downQueue)) && (!this.floorsRemainingDown(currentFloor, upQueue))) {
-            // this.updateHasFloors('down')
-            console.log('are we finding lowest up floor?')
             let lowestUpFloor = this.findLowestUpFloor(totalFloors, upQueue);
             if (lowestUpFloor === currentFloor){
                 visitUpFloor(currentFloor)
             }
             changeDirection(lowestUpFloor, currentFloor);
         }
-        // if (hasUpFloors === 0 && hasDownFloors === 0) {
-        //   changeDirection(0, 0);
-        // }
-      
     }
   }   
 }

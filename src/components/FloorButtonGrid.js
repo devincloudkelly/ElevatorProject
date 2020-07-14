@@ -7,7 +7,6 @@ let FloorButtonGrid = (props) => {
     // adds floor to appropriate queue in state
     function requestFloor(e) {
         let targetFloor = parseInt(e.target.id)
-        console.log('target and current floor from pushbutton',targetFloor, currentFloor)
         if (targetFloor > currentFloor){
             return addFloorToQueue(targetFloor, "up")
         }
