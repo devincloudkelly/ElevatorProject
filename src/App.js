@@ -55,6 +55,7 @@ class App extends React.Component {
 
   // when a floor is visited, you update the currentFloor and remove it from the appropriate queue
   visitUpFloor = (floor) => {
+    console.log('visiting up floor...', floor)
     this.updateCurrentFloor(floor)
     // logic to remove floor from appropriate queue
     this.setState(state => {
@@ -65,7 +66,7 @@ class App extends React.Component {
   }
 
   visitDownFloor = (floor) => {
-    console.log('visiting down floor..')
+    console.log('visiting down floor..', floor)
     this.updateCurrentFloor(floor)
     this.setState(state => {
       let downQueue = Object.assign({}, state.downQueue)
